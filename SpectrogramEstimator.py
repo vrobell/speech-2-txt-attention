@@ -79,7 +79,7 @@ class SpectrogramEstimator:
         spectrogram = self._stft(sample, fft_size, step_size)
         spectrogram = np.abs(spectrogram)
         spectrogram /= spectrogram.max()
-        spectrogram = np.log10(spectrogram)
+        spectrogram = np.log10(spectrogram+1e-20)
         spectrogram[spectrogram < -threshold] = -threshold
 
         return spectrogram

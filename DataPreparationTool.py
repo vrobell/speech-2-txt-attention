@@ -188,19 +188,22 @@ class DataPreparationTool:
             i += 1
 
 
-dpt = DataPreparationTool(label_file_dir='cv-valid-train.csv',
-                          max_label_len=60,
-                          labels_dir='labels_testing', # 'data/train/5s/labels',
-                          format_data_dir='data/train/common-voice',
-                          wav_data_dir='dataset_wav',  # 'data/train/5s/wav',
-                          spectre_data_dir='spectre_testing'  # 'data/train/5s/spectre'
-                          )
+dpt = DataPreparationTool(
+    label_file_dir='cv-valid-train.csv',
+    max_label_len=60,
+    labels_dir='labels_testing',  # 'data/train/5s/labels',
+    format_data_dir='data/train/common-voice',
+    wav_data_dir='dataset_wav/train',  # 'data/train/5s/wav',
+    spectre_data_dir='spectre_testing'  # 'data/train/5s/spectre'
+)
 
-dpt.process_data(fft_size=960,
-                 step_size=480,
-                 threshold=3.0,
-                 low_cut=500,
-                 high_cut=15000,
-                 pad_len=5.0)
+dpt.process_data(
+    fft_size=960,
+    step_size=480,
+    threshold=3.0,
+    low_cut=500,
+    high_cut=15000,
+    pad_len=2.5
+)
 
 
