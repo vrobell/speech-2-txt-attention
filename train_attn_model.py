@@ -10,6 +10,7 @@ from keras.utils import to_categorical
 
 # SET PARAMS ---------------------------------------------------------
 # Directories
+weights_file_dir = 'files/attn_final_weights_2s.h5'  # File with previous weights
 X_data_dir = 'spectre_testing'   # Folder with spectograms
 on_epoch_dir = 'on_epoch'        # Folder to store the weights after every epoch
 models_dir = 'models'            # Folder to store the final model
@@ -18,11 +19,11 @@ y_labels_dir = 'labels_testing'  # Folder with labels
 # Training params
 BATCH_SIZE = 128
 EPOCHS = 15
-value_split = 22200 - BATCH_SIZE  # Number of data files for training
+value_split = 133500 - BATCH_SIZE  # Number of data files for training
 
 # Some model params
-spectre_seq_dim = 250
-max_len_target = 60
+spectre_seq_dim = 500
+max_len_target = 120
 num_words_output = 29
 LATENT_DIM = 500
 LATENT_DIM_DECODER = 250
@@ -172,6 +173,7 @@ model.compile(
 )
 
 print(model.summary())
+model.load_weights(weights_file_dir)
 
 
 # TRAIN THE MODEL ------------------------------------------------------------------------
@@ -197,8 +199,8 @@ plt.show()
 
 
 # SAVE FINAL MODEL -----------------------------------------------------------------------
-model.save_weights(models_dir + '/attn_final_weights.h5')
-model.save(models_dir + '/attn_whole_model.h5')
+model.save_weights(models_dir + '/attn_final_weights_5s.h5')
+model.save(models_dir + '/attn_whole_model_5s.h5')
 
 encoder_model = Model(encoder_inputs_placeholder, encoder_outputs)
 encoder_outputs_as_input = Input(shape=(conv_shape[1], LATENT_DIM*2,))
@@ -219,5 +221,5 @@ decoder_model = Model(
     outputs=[decoder_outputs, s, c]
 )
 
-encoder_model.save(models_dir + '/encoder_model.h5')
-decoder_model.save(models_dir + '/decoder_model.h5')
+encoder_model.save(models_dir + '/encoder_model_5s.h5')
+decoder_model.save(models_dir + '/decoder_model_5s.h5')
